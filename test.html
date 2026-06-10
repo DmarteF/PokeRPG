@@ -259,17 +259,102 @@
       height: 116px;
       background: rgba(5, 18, 31, 0.94);
     }
+
+    .footer-note {
+      position: absolute;
+      left: 20px;
+      top: 594px;
+      width: 320px;
+      margin: 0;
+      color: #dbe6ef;
+      font-size: 13px;
+      text-align: center;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.65);
+    }
+
+    .panel-text {
+      position: absolute;
+      margin: 0;
+      color: #0d1f33;
+      line-height: 1.25;
+      text-align: center;
+      overflow-wrap: break-word;
+    }
+
+    .modal-check {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 268px;
+      height: 40px;
+      color: #0d1f33;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .modal-check input {
+      width: 22px;
+      height: 22px;
+      accent-color: #f28c1f;
+    }
+
+    .modal-select,
+    .modal-input {
+      position: absolute;
+      height: 38px;
+      border: 2px solid #52758d;
+      border-radius: 6px;
+      padding: 0 10px;
+      color: #0d1f33;
+      background: #eef6fb;
+      font: 700 15px Arial, Helvetica, sans-serif;
+    }
+
+    .avatar-choice,
+    .slot-card,
+    .delete-small {
+      position: absolute;
+      border: 2px solid #52758d;
+      border-radius: 6px;
+      background: #d4e2ee;
+      color: #0d1f33;
+      font-size: 13px;
+      text-shadow: none;
+    }
+
+    .avatar-choice.selected {
+      border: 3px solid #ea750d;
+      background: #f2c752;
+    }
+
+    .slot-card {
+      width: 232px;
+      height: 82px;
+      white-space: pre-line;
+      line-height: 1.25;
+    }
+
+    .delete-small {
+      width: 64px;
+      height: 38px;
+      border-color: #7a1512;
+      background: #bd2e28;
+      color: #fff;
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
   <div id="wrap">
     <main id="phone" aria-label="PokeRPG UI test">
       <section id="main-menu" class="screen active">
-        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:30px; top:70px; width:300px; height:118px;">
-        <button class="image-button" style="left:70px; top:260px; width:220px; height:48px;" data-popup-title="Load Game" data-popup-message="Load Game placeholder">Load Game</button>
-        <button class="image-button" style="left:70px; top:320px; width:220px; height:48px;" data-screen="home">New Game</button>
-        <button class="image-button" style="left:70px; top:380px; width:220px; height:48px;" data-popup-title="Options" data-popup-message="Options coming soon">Options</button>
-        <button class="image-button" style="left:70px; top:440px; width:220px; height:48px;" data-popup-title="About" data-popup-message="PokeRPG private remake">About</button>
+        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:36px; top:70px; width:288px; height:112px;">
+        <button id="menu-load" class="image-button" style="left:70px; top:250px; width:220px; height:48px;">Load Game</button>
+        <button id="menu-new" class="image-button" style="left:70px; top:310px; width:220px; height:48px;">New Game</button>
+        <button id="menu-options" class="image-button" style="left:70px; top:370px; width:220px; height:48px;">Options</button>
+        <button id="menu-about" class="image-button" style="left:70px; top:430px; width:220px; height:48px;">About</button>
+        <p class="footer-note">Private remake prototype</p>
       </section>
 
       <section id="home" class="screen">
@@ -362,8 +447,8 @@
       <div id="message-popup" class="overlay">
         <div class="shade"></div>
         <div class="popup-panel message-panel"></div>
-        <p id="popup-title" class="label" style="left:44px; top:140px; width:272px; font-size:22px;"></p>
-        <p id="popup-message" class="label" style="left:42px; top:205px; width:276px; height:110px; font-size:18px;"></p>
+        <p id="popup-title" class="panel-text" style="left:44px; top:140px; width:272px; font-size:22px; font-weight:700;"></p>
+        <p id="popup-message" class="panel-text" style="left:42px; top:205px; width:276px; height:110px; font-size:18px;"></p>
         <button class="icon-button" style="left:298px; top:128px;" data-close-overlay="message-popup"><img src="assets/icons/icon_close_32.png" alt="Close"></button>
         <button class="image-button" style="left:70px; top:370px; width:220px; height:48px;" data-close-overlay="message-popup">OK</button>
       </div>
@@ -376,6 +461,112 @@
       maps: document.querySelector("#maps-popup"),
       message: document.querySelector("#message-popup")
     };
+    const defaultSettings = { music_enabled: true, sfx_enabled: true, language: "en" };
+    const menuText = {
+      en: {
+        load_game: "Load Game",
+        new_game: "New Game",
+        options: "Options",
+        about: "About",
+        about_message: "PokeRPG private remake",
+        apply: "Apply",
+        cancel: "Cancel",
+        music: "Music",
+        sfx: "Sound Effects",
+        language: "Language",
+        player_name: "Player name",
+        choose_avatar: "Choose your avatar",
+        start_game: "Start Game",
+        empty_slot: "Empty Slot",
+        empty_save_slot: "Empty save slot.",
+        delete_save: "Delete Save",
+        delete: "Delete",
+        delete_confirm: "Delete this save?",
+        slot: "Slot",
+        level: "Level",
+        money: "Money",
+        avatar: "Avatar"
+      },
+      pt: {
+        load_game: "Carregar Jogo",
+        new_game: "Novo Jogo",
+        options: "Opções",
+        about: "Sobre",
+        about_message: "PokeRPG private remake",
+        apply: "Aplicar",
+        cancel: "Cancelar",
+        music: "Música",
+        sfx: "Efeitos Sonoros",
+        language: "Idioma",
+        player_name: "Nome do jogador",
+        choose_avatar: "Escolha seu avatar",
+        start_game: "Iniciar Jogo",
+        empty_slot: "Slot Vazio",
+        empty_save_slot: "Slot de save vazio.",
+        delete_save: "Apagar Save",
+        delete: "Apagar",
+        delete_confirm: "Apagar este save?",
+        slot: "Slot",
+        level: "Level",
+        money: "Money",
+        avatar: "Avatar"
+      }
+    };
+    let settings = loadSettings();
+    let selectedAvatarId = 1;
+
+    function t(key) {
+      const lang = menuText[settings.language] ? settings.language : "en";
+      return menuText[lang][key] || menuText.en[key] || key;
+    }
+
+    function loadSettings() {
+      try {
+        return { ...defaultSettings, ...JSON.parse(localStorage.getItem("pokerpg_settings") || "{}") };
+      } catch {
+        return { ...defaultSettings };
+      }
+    }
+
+    function saveSettings(nextSettings) {
+      settings = { ...defaultSettings, ...nextSettings };
+      localStorage.setItem("pokerpg_settings", JSON.stringify(settings));
+      updateMenuText();
+    }
+
+    function saveKey(slot) {
+      return `pokerpg_save_${slot}`;
+    }
+
+    function getSave(slot) {
+      try {
+        return JSON.parse(localStorage.getItem(saveKey(slot)) || "null");
+      } catch {
+        return null;
+      }
+    }
+
+    function writeSave(slot, saveData) {
+      localStorage.setItem(saveKey(slot), JSON.stringify(saveData));
+    }
+
+    function deleteSave(slot) {
+      localStorage.removeItem(saveKey(slot));
+    }
+
+    function firstOpenSlot() {
+      for (let slot = 1; slot <= 3; slot += 1) {
+        if (!getSave(slot)) return slot;
+      }
+      return 1;
+    }
+
+    function updateMenuText() {
+      document.querySelector("#menu-load").textContent = t("load_game");
+      document.querySelector("#menu-new").textContent = t("new_game");
+      document.querySelector("#menu-options").textContent = t("options");
+      document.querySelector("#menu-about").textContent = t("about");
+    }
 
     function scalePreview() {
       const wrap = document.querySelector("#wrap");
@@ -387,6 +578,7 @@
       screens.forEach((screen) => screen.classList.toggle("active", screen.id === id));
       closeOverlay("maps-popup");
       closeOverlay("message-popup");
+      closeDynamicModal();
 
       if (id === "battle") {
         document.querySelector("#battle-message").innerHTML = "Wild Wurmple appeared!<br>Go! Charmander!<br>What will Charmander do?";
@@ -411,6 +603,77 @@
       openOverlay("message-popup");
     }
 
+    function closeDynamicModal() {
+      const modal = document.querySelector("#dynamic-modal");
+      if (modal) modal.remove();
+    }
+
+    function openDynamicModal(title, bodyHtml, y = 60, height = 520) {
+      closeDynamicModal();
+      const modal = document.createElement("div");
+      modal.id = "dynamic-modal";
+      modal.className = "overlay active";
+      modal.innerHTML = `
+        <div class="shade"></div>
+        <div class="popup-panel" style="top:${y}px; height:${height}px;"></div>
+        <p class="panel-text" style="left:50px; top:${y + 26}px; width:260px; font-size:23px; font-weight:700;">${title}</p>
+        <button class="icon-button" style="left:298px; top:${y + 20}px;" data-dynamic-close><img src="assets/icons/icon_close_32.png" alt="Close"></button>
+        ${bodyHtml}
+      `;
+      document.querySelector("#phone").appendChild(modal);
+    }
+
+    function openOptionsModal() {
+      openDynamicModal(t("options"), `
+        <label class="modal-check" style="left:46px; top:164px;"><input id="opt-music" type="checkbox">${t("music")}</label>
+        <label class="modal-check" style="left:46px; top:214px;"><input id="opt-sfx" type="checkbox">${t("sfx")}</label>
+        <p class="panel-text" style="left:46px; top:281px; width:120px; text-align:left; font-size:16px; font-weight:700;">${t("language")}</p>
+        <select id="opt-language" class="modal-select" style="left:166px; top:274px; width:148px;">
+          <option value="en">English</option>
+          <option value="pt">Português</option>
+        </select>
+        <button class="image-button button-140" style="left:38px; top:398px; width:140px; height:44px;" id="apply-options">${t("apply")}</button>
+        <button class="image-button button-140" style="left:182px; top:398px; width:140px; height:44px;" data-dynamic-close>${t("cancel")}</button>
+      `, 92, 420);
+      document.querySelector("#opt-music").checked = settings.music_enabled;
+      document.querySelector("#opt-sfx").checked = settings.sfx_enabled;
+      document.querySelector("#opt-language").value = settings.language;
+    }
+
+    function openNewGameModal() {
+      selectedAvatarId = 1;
+      openDynamicModal(t("new_game"), `
+        <p class="panel-text" style="left:42px; top:136px; width:276px; text-align:left; font-size:15px; font-weight:700;">${t("player_name")}</p>
+        <input id="new-player-name" class="modal-input" style="left:42px; top:164px; width:276px;" value="KaiPlayz">
+        <p class="panel-text" style="left:42px; top:224px; width:276px; font-size:17px; font-weight:700;">${t("choose_avatar")}</p>
+        <button class="avatar-choice selected" style="left:38px; top:266px; width:88px; height:74px;" data-avatar-choice="1">${t("avatar")} 1</button>
+        <button class="avatar-choice" style="left:134px; top:266px; width:88px; height:74px;" data-avatar-choice="2">${t("avatar")} 2</button>
+        <button class="avatar-choice" style="left:230px; top:266px; width:88px; height:74px;" data-avatar-choice="3">${t("avatar")} 3</button>
+        <button class="image-button button-250" style="left:55px; top:404px; width:250px; height:52px;" id="start-game">${t("start_game")}</button>
+        <button class="image-button" style="left:70px; top:472px; width:220px; height:48px;" data-dynamic-close>${t("cancel")}</button>
+      `);
+    }
+
+    function openLoadModal() {
+      let slotsHtml = "";
+      for (let slot = 1; slot <= 3; slot += 1) {
+        const save = getSave(slot);
+        const y = 134 + (slot - 1) * 104;
+        if (!save) {
+          slotsHtml += `<button class="slot-card" style="left:28px; top:${y}px;" data-empty-slot>${t("slot")} ${slot}\n${t("empty_slot")}</button>`;
+          continue;
+        }
+        slotsHtml += `
+          <button class="slot-card" style="left:28px; top:${y}px;" data-load-slot="${slot}">${t("slot")} ${slot} - ${t("avatar")} ${save.avatar_id}\n${save.player_name}\n${t("level")} ${save.level} | ${t("money")} ${save.money}</button>
+          <button class="delete-small" style="left:268px; top:${y + 22}px;" data-delete-slot="${slot}">${t("delete")}</button>
+        `;
+      }
+      openDynamicModal(t("load_game"), `
+        ${slotsHtml}
+        <button class="image-button" style="left:70px; top:522px; width:220px; height:48px;" data-dynamic-close>${t("cancel")}</button>
+      `);
+    }
+
     function exploreForest() {
       const result = document.querySelector("#forest-result");
       result.innerHTML = "";
@@ -432,6 +695,97 @@
     document.addEventListener("click", (event) => {
       const target = event.target.closest("button");
       if (!target) return;
+
+      if (target.id === "menu-load") {
+        openLoadModal();
+        return;
+      }
+
+      if (target.id === "menu-new") {
+        openNewGameModal();
+        return;
+      }
+
+      if (target.id === "menu-options") {
+        openOptionsModal();
+        return;
+      }
+
+      if (target.id === "menu-about") {
+        showPopup(t("about"), t("about_message"));
+        return;
+      }
+
+      if (target.dataset.dynamicClose !== undefined) {
+        closeDynamicModal();
+        return;
+      }
+
+      if (target.dataset.avatarChoice) {
+        selectedAvatarId = Number(target.dataset.avatarChoice);
+        document.querySelectorAll(".avatar-choice").forEach((button) => {
+          button.classList.toggle("selected", Number(button.dataset.avatarChoice) === selectedAvatarId);
+        });
+        return;
+      }
+
+      if (target.id === "apply-options") {
+        saveSettings({
+          music_enabled: document.querySelector("#opt-music").checked,
+          sfx_enabled: document.querySelector("#opt-sfx").checked,
+          language: document.querySelector("#opt-language").value
+        });
+        closeDynamicModal();
+        return;
+      }
+
+      if (target.id === "start-game") {
+        const input = document.querySelector("#new-player-name");
+        const playerName = input.value.trim() || "Player";
+        const slot = firstOpenSlot();
+        const now = new Date().toISOString();
+        writeSave(slot, {
+          slot,
+          player_name: playerName,
+          avatar_id: selectedAvatarId,
+          money: 3000,
+          level: 0,
+          created_at: now,
+          updated_at: now,
+          current_scene: "HomeScreen",
+          current_map: "",
+          settings_language: settings.language
+        });
+        showScreen("home");
+        return;
+      }
+
+      if (target.dataset.loadSlot) {
+        const slot = Number(target.dataset.loadSlot);
+        const save = getSave(slot);
+        if (!save) {
+          showPopup(t("load_game"), t("empty_save_slot"));
+          return;
+        }
+        save.updated_at = new Date().toISOString();
+        writeSave(slot, save);
+        showScreen("home");
+        return;
+      }
+
+      if (target.dataset.emptySlot !== undefined) {
+        showPopup(t("load_game"), t("empty_save_slot"));
+        return;
+      }
+
+      if (target.dataset.deleteSlot) {
+        const slot = Number(target.dataset.deleteSlot);
+        if (window.confirm(t("delete_confirm"))) {
+          deleteSave(slot);
+          openLoadModal();
+        }
+        return;
+      }
 
       if (target.dataset.openMaps !== undefined) {
         openOverlay("maps-popup");
@@ -485,6 +839,7 @@
     });
 
     window.addEventListener("resize", scalePreview);
+    updateMenuText();
     scalePreview();
   </script>
 </body>

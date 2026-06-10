@@ -5,6 +5,7 @@ const BACKGROUND = "res://assets/backgrounds/gray_texture_360x640.png"
 const TOPBAR = "res://assets/ui/topbar_360x44.png"
 const POPUP_PANEL = "res://assets/ui/popup_panel_blue_330x520.png"
 const LIST_SLOT = "res://assets/ui/list_slot_gray_320x54.png"
+const PANEL_TEXT = Color(0.05, 0.12, 0.20)
 
 static func setup_screen(root: Control) -> void:
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -48,6 +49,12 @@ static func add_label(parent: Node, text: String, pos: Vector2, node_size: Vecto
 	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.7))
 	label.add_theme_constant_override("outline_size", 2)
 	parent.add_child(label)
+	return label
+
+
+static func add_panel_label(parent: Node, text: String, pos: Vector2, node_size: Vector2, font_size: int, align: int, valign: int, node_name: String) -> Label:
+	var label := add_label(parent, text, pos, node_size, font_size, PANEL_TEXT, align, valign, node_name)
+	label.add_theme_constant_override("outline_size", 0)
 	return label
 
 
@@ -130,8 +137,8 @@ static func show_message_popup(parent: Node, title: String, message: String) -> 
 	overlay.add_child(shade)
 
 	add_texture(overlay, POPUP_PANEL, Vector2(15, 110), Vector2(330, 360), "PopupPanel", TextureRect.STRETCH_SCALE)
-	add_label(overlay, title, Vector2(44, 140), Vector2(272, 36), 22, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Title")
-	add_label(overlay, message, Vector2(42, 205), Vector2(276, 110), 18, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Message")
+	add_panel_label(overlay, title, Vector2(44, 140), Vector2(272, 36), 22, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Title")
+	add_panel_label(overlay, message, Vector2(42, 205), Vector2(276, 110), 18, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Message")
 
 	var close := add_icon_button(overlay, "res://assets/icons/icon_close_32.png", Vector2(298, 128), Callable(), "Close")
 	close.pressed.connect(func():
