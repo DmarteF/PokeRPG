@@ -151,6 +151,139 @@ static func show_message_popup(parent: Node, title: String, message: String) -> 
 	return overlay
 
 
+static func show_confirm_popup(parent: Node, title: String, message: String, yes_text: String, no_text: String, on_yes: Callable) -> Control:
+	var overlay := Control.new()
+	overlay.name = "ConfirmPopup"
+	overlay.position = Vector2.ZERO
+	overlay.size = SCREEN_SIZE
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	parent.add_child(overlay)
+
+	var shade := ColorRect.new()
+	shade.name = "Shade"
+	shade.position = Vector2.ZERO
+	shade.size = SCREEN_SIZE
+	shade.color = Color(0, 0, 0, 0.45)
+	shade.mouse_filter = Control.MOUSE_FILTER_STOP
+	overlay.add_child(shade)
+
+	add_texture(overlay, POPUP_PANEL, Vector2(15, 150), Vector2(330, 300), "PopupPanel", TextureRect.STRETCH_SCALE)
+	add_panel_label(overlay, title, Vector2(44, 184), Vector2(272, 34), 22, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Title")
+	add_panel_label(overlay, message, Vector2(42, 246), Vector2(276, 72), 18, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Message")
+
+	var yes_callback = func():
+		if on_yes.is_valid():
+			on_yes.call()
+		overlay.queue_free()
+	add_orange_button(overlay, yes_text, Vector2(38, 356), Vector2(140, 44), yes_callback, "YesButton")
+
+	var no_callback = func():
+		overlay.queue_free()
+	add_orange_button(overlay, no_text, Vector2(182, 356), Vector2(140, 44), no_callback, "NoButton")
+	return overlay
+
+
+static func show_options_popup(parent: Node, title: String, labels: Dictionary, on_apply: Callable) -> Control:
+	var overlay := Control.new()
+	overlay.name = "OptionsPopup"
+	overlay.position = Vector2.ZERO
+	overlay.size = SCREEN_SIZE
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	parent.add_child(overlay)
+
+	var shade := ColorRect.new()
+	shade.name = "Shade"
+	shade.position = Vector2.ZERO
+	shade.size = SCREEN_SIZE
+	shade.color = Color(0, 0, 0, 0.45)
+	shade.mouse_filter = Control.MOUSE_FILTER_STOP
+	overlay.add_child(shade)
+
+	add_texture(overlay, POPUP_PANEL, Vector2(15, 92), Vector2(330, 420), "PopupPanel", TextureRect.STRETCH_SCALE)
+	add_panel_label(overlay, title, Vector2(50, 120), Vector2(260, 34), 23, HORIZONTAL_ALIGNMENT_CENTER, VERTICAL_ALIGNMENT_CENTER, "Title")
+
+	var close := add_icon_button(overlay, "res://assets/icons/icon_close_32.png", Vector2(298, 112), Callable(), "Close")
+	close.pressed.connect(func():
+		overlay.queue_free()
+	)
+
+	var settings := SaveManager.get_settings()
+	var music_check := CheckBox.new()
+	music_check.name = "MusicCheck"
+	music_check.text = str(labels.get("music", "Music"))
+	music_check.position = Vector2(46, 164)
+	music_check.size = Vector2(268, 40)
+	music_check.button_pressed = bool(settings.get("music_enabled", true))
+	_style_panel_check(music_check)
+	overlay.add_child(music_check)
+
+	var sfx_check := CheckBox.new()
+	sfx_check.name = "SfxCheck"
+	sfx_check.text = str(labels.get("sfx", "Sound Effects"))
+	sfx_check.position = Vector2(46, 214)
+	sfx_check.size = Vector2(268, 40)
+	sfx_check.button_pressed = bool(settings.get("sfx_enabled", true))
+	_style_panel_check(sfx_check)
+	overlay.add_child(sfx_check)
+
+	add_panel_label(overlay, str(labels.get("language", "Language")), Vector2(46, 276), Vector2(120, 30), 16, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_CENTER, "LanguageLabel")
+
+	var language_option := OptionButton.new()
+	language_option.name = "LanguageOption"
+	language_option.position = Vector2(166, 274)
+	language_option.size = Vector2(148, 36)
+	language_option.add_item("English", 0)
+	language_option.add_item("Portugues", 1)
+	language_option.select(1 if str(settings.get("language", "en")) == "pt" else 0)
+	language_option.add_theme_font_size_override("font_size", 15)
+	language_option.add_theme_color_override("font_color", PANEL_TEXT)
+	overlay.add_child(language_option)
+
+	var apply_callback = func():
+		var language := "pt" if language_option.selected == 1 else "en"
+		SaveManager.save_settings({
+			"music_enabled": music_check.button_pressed,
+			"sfx_enabled": sfx_check.button_pressed,
+			"language": language,
+		})
+		if on_apply.is_valid():
+			on_apply.call(SaveManager.get_settings())
+		overlay.queue_free()
+	add_orange_button(overlay, str(labels.get("apply", "Apply")), Vector2(38, 398), Vector2(140, 44), apply_callback, "ApplyOptions")
+
+	var cancel_callback = func():
+		overlay.queue_free()
+	add_orange_button(overlay, str(labels.get("cancel", "Cancel")), Vector2(182, 398), Vector2(140, 44), cancel_callback, "CancelOptions")
+	return overlay
+
+
+static func style_panel_button(control: Control, fill: Color, border: Color, border_width: int = 2) -> void:
+	var normal := StyleBoxFlat.new()
+	normal.bg_color = fill
+	normal.border_color = border
+	normal.set_border_width_all(border_width)
+	normal.set_corner_radius_all(6)
+
+	var hover := normal.duplicate() as StyleBoxFlat
+	hover.bg_color = fill.lightened(0.05)
+	var pressed := normal.duplicate() as StyleBoxFlat
+	pressed.bg_color = fill.darkened(0.07)
+
+	control.add_theme_stylebox_override("panel", normal)
+	control.add_theme_stylebox_override("normal", normal)
+	control.add_theme_stylebox_override("hover", hover)
+	control.add_theme_stylebox_override("pressed", pressed)
+	control.add_theme_stylebox_override("focus", normal)
+
+
+static func _style_panel_check(check_box: CheckBox) -> void:
+	check_box.focus_mode = Control.FOCUS_NONE
+	check_box.add_theme_font_size_override("font_size", 16)
+	check_box.add_theme_color_override("font_color", PANEL_TEXT)
+	check_box.add_theme_color_override("font_hover_color", PANEL_TEXT)
+	check_box.add_theme_color_override("font_pressed_color", PANEL_TEXT)
+
+
 static func _orange_normal_for_size(node_size: Vector2) -> String:
 	if node_size.x <= 190.0:
 		return "res://assets/ui/button_orange_180x40.png"

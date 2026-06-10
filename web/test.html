@@ -43,7 +43,7 @@
       height: var(--screen-h);
       overflow: hidden;
       color: var(--white);
-      background: url("assets/backgrounds/gray_texture_360x640.png") center / cover no-repeat;
+      background: url("../assets/backgrounds/gray_texture_360x640.png") center / cover no-repeat;
       image-rendering: pixelated;
       box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
     }
@@ -66,7 +66,7 @@
       left: 0;
       width: 360px;
       height: 44px;
-      background: url("assets/ui/topbar_360x44.png") center / 100% 100% no-repeat;
+      background: url("../assets/ui/topbar_360x44.png") center / 100% 100% no-repeat;
     }
 
     .top-title {
@@ -111,32 +111,32 @@
       position: absolute;
       display: grid;
       place-items: center;
-      background: url("assets/ui/button_orange_220x48.png") center / 100% 100% no-repeat;
+      background: url("../assets/ui/button_orange_220x48.png") center / 100% 100% no-repeat;
     }
 
     .image-button:active {
-      background-image: url("assets/ui/button_orange_220x48_pressed.png");
+      background-image: url("../assets/ui/button_orange_220x48_pressed.png");
       transform: translateY(1px);
     }
 
     .button-250 {
-      background-image: url("assets/ui/button_orange_250x52.png");
+      background-image: url("../assets/ui/button_orange_250x52.png");
       font-size: 16px;
     }
 
     .button-250:active {
-      background-image: url("assets/ui/button_orange_250x52_pressed.png");
+      background-image: url("../assets/ui/button_orange_250x52_pressed.png");
     }
 
     .button-180,
     .button-140 {
-      background-image: url("assets/ui/button_orange_180x40.png");
+      background-image: url("../assets/ui/button_orange_180x40.png");
       font-size: 15px;
     }
 
     .button-180:active,
     .button-140:active {
-      background-image: url("assets/ui/button_orange_180x40_pressed.png");
+      background-image: url("../assets/ui/button_orange_180x40_pressed.png");
     }
 
     .icon-button {
@@ -161,7 +161,7 @@
       display: grid;
       grid-template-columns: 58px 1fr 18px;
       align-items: center;
-      background: url("assets/ui/list_slot_gray_320x54.png") center / 100% 100% no-repeat;
+      background: url("../assets/ui/list_slot_gray_320x54.png") center / 100% 100% no-repeat;
       font-size: 17px;
     }
 
@@ -194,7 +194,7 @@
       top: 60px;
       width: 330px;
       height: 520px;
-      background: url("assets/ui/popup_panel_blue_330x520.png") center / 100% 100% no-repeat;
+      background: url("../assets/ui/popup_panel_blue_330x520.png") center / 100% 100% no-repeat;
     }
 
     .message-panel {
@@ -349,7 +349,7 @@
   <div id="wrap">
     <main id="phone" aria-label="PokeRPG UI test">
       <section id="main-menu" class="screen active">
-        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:36px; top:70px; width:288px; height:112px;">
+        <img class="logo" src="../assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:36px; top:70px; width:288px; height:112px;">
         <button id="menu-load" class="image-button" style="left:70px; top:250px; width:220px; height:48px;">Load Game</button>
         <button id="menu-new" class="image-button" style="left:70px; top:310px; width:220px; height:48px;">New Game</button>
         <button id="menu-options" class="image-button" style="left:70px; top:370px; width:220px; height:48px;">Options</button>
@@ -359,40 +359,34 @@
 
       <section id="home" class="screen">
         <div class="topbar"></div>
-        <button class="icon-button" style="left:20px; top:6px;" data-open-maps><img src="assets/icons/icon_map_32.png" alt="Maps"></button>
-        <button class="icon-button" style="left:88px; top:6px;" data-popup-title="Trophy" data-popup-message="Coming soon"><img src="assets/icons/icon_trophy_32.png" alt="Trophy"></button>
-        <button class="icon-button" style="left:156px; top:6px;" data-popup-title="Pokemon" data-popup-message="Coming soon"><img src="assets/icons/icon_ball_32.png" alt="Pokemon"></button>
-        <button class="icon-button" style="left:224px; top:6px;" data-popup-title="Profile" data-popup-message="Coming soon"><img src="assets/icons/icon_user_32.png" alt="User"></button>
-        <button class="icon-button" style="left:292px; top:6px;" data-popup-title="Options" data-popup-message="Options coming soon"><img src="assets/icons/icon_gear_32.png" alt="Options"></button>
-
-        <p class="label" style="left:20px; top:64px; width:320px; font-size:18px;">Hello KaiPlayz,</p>
-        <p class="label" style="left:20px; top:92px; width:320px; font-size:17px;">Welcome to</p>
-        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:62px; top:120px; width:236px; height:92px;">
-        <p class="label" style="left:20px; top:238px; width:320px; font-size:16px;">New here? See the tutorial:</p>
-        <button class="image-button button-250" style="left:55px; top:270px; width:250px; height:52px;" data-popup-title="Tutorial" data-popup-message="Tutorial / Web Page">Tutorial / Web Page</button>
-
-        <button class="list-button no-icon" style="left:20px; top:338px;" data-open-maps>Gen. 1 / Kanto</button>
-        <button class="list-button no-icon" style="left:20px; top:394px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 2 / Johto</button>
-        <button class="list-button no-icon" style="left:20px; top:450px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 3 / Hoenn</button>
-        <button class="list-button no-icon" style="left:20px; top:506px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 4 / Sinnoh</button>
-        <button class="list-button no-icon" style="left:20px; top:562px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 5 / Unova</button>
+        <h1 class="top-title">Home</h1>
+        <img class="logo" src="../assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:92px; top:58px; width:176px; height:68px;">
+        <p id="home-greeting" class="label" style="left:20px; top:128px; width:320px; font-size:18px;">Hello Player,</p>
+        <div style="position:absolute; left:24px; top:164px; width:312px; height:132px; border:2px solid #6694b8; border-radius:6px; background:#e0effa;"></div>
+        <p id="home-summary" class="panel-text" style="left:42px; top:180px; width:276px; height:104px; text-align:left; font-size:16px;"></p>
+        <button id="home-explore" class="image-button button-250" style="left:55px; top:318px; width:250px; height:52px;">Explore World</button>
+        <button id="home-pokemon" class="image-button button-250" style="left:55px; top:376px; width:250px; height:52px;">My Pokemon</button>
+        <button id="home-bag" class="image-button button-250" style="left:55px; top:434px; width:250px; height:52px;">Bag</button>
+        <button id="home-pokedex" class="image-button button-250" style="left:55px; top:492px; width:250px; height:52px;">PokeDex</button>
+        <button id="home-options" class="image-button button-140" style="left:28px; top:558px; width:140px; height:44px;">Options</button>
+        <button id="home-exit" class="image-button button-140" style="left:192px; top:558px; width:140px; height:44px;">Exit</button>
       </section>
 
       <section id="forest" class="screen">
         <div class="topbar"></div>
         <h1 class="top-title">Forest Map</h1>
         <p class="label" style="left:20px; top:54px; width:320px; font-size:22px;">Forest Map</p>
-        <img class="map-icon" src="assets/maps/map_forest_64.png" alt="Forest Map" style="left:148px; top:88px;">
+        <img class="map-icon" src="../assets/maps/map_forest_64.png" alt="Forest Map" style="left:148px; top:88px;">
         <p class="label" style="left:28px; top:158px; width:304px; height:70px; font-size:15px;">Explore this map to find rare Pokemon in the forest map exists several types of Pokemon.</p>
         <p class="label" style="left:24px; top:232px; width:312px; font-size:15px;">On this map you can find Pokemon types:</p>
 
-        <img class="badge" src="assets/badges/type_grass.png" alt="GRASS" style="left:20px; top:274px;">
-        <img class="badge" src="assets/badges/type_normal.png" alt="NORMAL" style="left:102px; top:274px;">
-        <img class="badge" src="assets/badges/type_ground.png" alt="GROUND" style="left:184px; top:274px;">
-        <img class="badge" src="assets/badges/type_flying.png" alt="FLYING" style="left:266px; top:274px;">
-        <img class="badge" src="assets/badges/type_water.png" alt="WATER" style="left:61px; top:308px;">
-        <img class="badge" src="assets/badges/type_poison.png" alt="POISON" style="left:143px; top:308px;">
-        <img class="badge" src="assets/badges/type_bug.png" alt="BUG" style="left:225px; top:308px;">
+        <img class="badge" src="../assets/badges/type_grass.png" alt="GRASS" style="left:20px; top:274px;">
+        <img class="badge" src="../assets/badges/type_normal.png" alt="NORMAL" style="left:102px; top:274px;">
+        <img class="badge" src="../assets/badges/type_ground.png" alt="GROUND" style="left:184px; top:274px;">
+        <img class="badge" src="../assets/badges/type_flying.png" alt="FLYING" style="left:266px; top:274px;">
+        <img class="badge" src="../assets/badges/type_water.png" alt="WATER" style="left:61px; top:308px;">
+        <img class="badge" src="../assets/badges/type_poison.png" alt="POISON" style="left:143px; top:308px;">
+        <img class="badge" src="../assets/badges/type_bug.png" alt="BUG" style="left:225px; top:308px;">
 
         <button class="image-button" style="left:70px; top:358px; width:220px; height:48px;" id="explore-map">Explore Map</button>
         <div id="forest-result"></div>
@@ -406,9 +400,9 @@
         <div class="hp-back" style="left:18px; top:92px; width:146px;"></div>
         <div id="enemy-hp-fill" class="hp-fill" style="left:20px; top:94px; width:142px;"></div>
         <p id="enemy-hp-text" class="label" style="left:18px; top:108px; width:146px; text-align:left; font-size:13px;">HP 60/60</p>
-        <img class="pokemon" src="assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:226px; top:70px;">
+        <img class="pokemon" src="../assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:226px; top:70px;">
 
-        <img class="pokemon" src="assets/sprites/sprite_charmander_96.png" alt="Charmander" style="left:36px; top:266px; width:112px; height:112px;">
+        <img class="pokemon" src="../assets/sprites/sprite_charmander_96.png" alt="Charmander" style="left:36px; top:266px; width:112px; height:112px;">
         <p class="label" style="left:166px; top:278px; width:178px; text-align:right; font-size:16px;">Charmander Lv. 15</p>
         <div class="hp-back" style="left:198px; top:310px; width:146px;"></div>
         <div class="hp-fill" style="left:200px; top:312px; width:142px;"></div>
@@ -435,13 +429,13 @@
         <div class="shade"></div>
         <div class="popup-panel"></div>
         <p class="label" style="left:60px; top:86px; width:240px; font-size:24px;">Maps</p>
-        <button class="icon-button" style="left:298px; top:80px;" data-close-overlay="maps-popup"><img src="assets/icons/icon_close_32.png" alt="Close"></button>
-        <button class="list-button" style="left:20px; top:138px;" data-screen="forest" data-close-before="maps-popup"><img src="assets/maps/map_forest_64.png" alt="">Forest Map</button>
-        <button class="list-button" style="left:20px; top:198px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_fire_64.png" alt="">Fire Map</button>
-        <button class="list-button" style="left:20px; top:258px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_mansion_64.png" alt="">Mansion Map</button>
-        <button class="list-button" style="left:20px; top:318px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_factory_64.png" alt="">Factory Map</button>
-        <button class="list-button" style="left:20px; top:378px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_ice_64.png" alt="">Ice Map</button>
-        <button class="list-button" style="left:20px; top:438px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_cave_64.png" alt="">Cave Map</button>
+        <button class="icon-button" style="left:298px; top:80px;" data-close-overlay="maps-popup"><img src="../assets/icons/icon_close_32.png" alt="Close"></button>
+        <button class="list-button" style="left:20px; top:138px;" data-screen="forest" data-close-before="maps-popup"><img src="../assets/maps/map_forest_64.png" alt="">Forest Map</button>
+        <button class="list-button" style="left:20px; top:198px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="../assets/maps/map_fire_64.png" alt="">Fire Map</button>
+        <button class="list-button" style="left:20px; top:258px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="../assets/maps/map_mansion_64.png" alt="">Mansion Map</button>
+        <button class="list-button" style="left:20px; top:318px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="../assets/maps/map_factory_64.png" alt="">Factory Map</button>
+        <button class="list-button" style="left:20px; top:378px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="../assets/maps/map_ice_64.png" alt="">Ice Map</button>
+        <button class="list-button" style="left:20px; top:438px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="../assets/maps/map_cave_64.png" alt="">Cave Map</button>
       </div>
 
       <div id="message-popup" class="overlay">
@@ -449,7 +443,7 @@
         <div class="popup-panel message-panel"></div>
         <p id="popup-title" class="panel-text" style="left:44px; top:140px; width:272px; font-size:22px; font-weight:700;"></p>
         <p id="popup-message" class="panel-text" style="left:42px; top:205px; width:276px; height:110px; font-size:18px;"></p>
-        <button class="icon-button" style="left:298px; top:128px;" data-close-overlay="message-popup"><img src="assets/icons/icon_close_32.png" alt="Close"></button>
+        <button class="icon-button" style="left:298px; top:128px;" data-close-overlay="message-popup"><img src="../assets/icons/icon_close_32.png" alt="Close"></button>
         <button class="image-button" style="left:70px; top:370px; width:220px; height:48px;" data-close-overlay="message-popup">OK</button>
       </div>
     </main>
@@ -485,7 +479,48 @@
         slot: "Slot",
         level: "Level",
         money: "Money",
-        avatar: "Avatar"
+        avatar: "Avatar",
+        hello: "Hello",
+        player: "Player",
+        starter: "Starter",
+        progress: "Progress",
+        badges: "badges",
+        explore_world: "Explore World",
+        my_pokemon: "My Pokemon",
+        bag: "Bag",
+        pokedex: "PokeDex",
+        exit: "Exit",
+        my_pokemon_soon: "My Pokemon coming soon",
+        bag_soon: "Bag coming soon",
+        pokedex_soon: "PokeDex coming soon",
+        return_menu: "Return to Main Menu?",
+        yes: "Yes",
+        no: "No",
+        world_map: "World Map",
+        available: "Available",
+        coming_soon: "Coming soon",
+        map_soon: "Coming soon",
+        type: "Type",
+        custom_image: "Custom Image",
+        use_custom_image: "Use Custom Image",
+        custom_help: "Place your image at user://custom_avatar.png and restart/load the profile.",
+        choose_generation: "Choose starter generation",
+        choose_starter: "Choose starter",
+        coming_starter: "Coming soon. Charmander is available for now.",
+        coming_generation: "Coming soon. Gen 1 is available for now.",
+        overwrite: "Slot 1 already has a save. Overwrite it?",
+        forest: "Forest Map",
+        fire: "Fire Map",
+        water: "Water Map",
+        cave: "Cave Map",
+        ice: "Ice Map",
+        mansion: "Mansion Map",
+        factory: "Factory Map",
+        electric: "Electric Map",
+        desert: "Desert Map",
+        ghost: "Ghost Tower",
+        dragon: "Dragon Valley",
+        safari: "Safari Zone"
       },
       pt: {
         load_game: "Carregar Jogo",
@@ -509,11 +544,55 @@
         slot: "Slot",
         level: "Level",
         money: "Money",
-        avatar: "Avatar"
+        avatar: "Avatar",
+        hello: "Olá",
+        player: "Jogador",
+        starter: "Inicial",
+        progress: "Progresso",
+        badges: "insígnias",
+        explore_world: "Explorar Mundo",
+        my_pokemon: "Meus Pokémon",
+        bag: "Mochila",
+        pokedex: "PokéDex",
+        exit: "Sair",
+        my_pokemon_soon: "Meus Pokémon em breve",
+        bag_soon: "Mochila em breve",
+        pokedex_soon: "PokéDex em breve",
+        return_menu: "Voltar ao Menu Principal?",
+        yes: "Sim",
+        no: "Não",
+        world_map: "Mapa do Mundo",
+        available: "Disponível",
+        coming_soon: "Em breve",
+        map_soon: "Em breve",
+        type: "Tipo",
+        custom_image: "Imagem própria",
+        use_custom_image: "Usar Imagem Própria",
+        custom_help: "Coloque sua imagem em user://custom_avatar.png e reinicie/carregue o perfil.",
+        choose_generation: "Escolha a geração inicial",
+        choose_starter: "Escolha o inicial",
+        coming_starter: "Em breve. Charmander está disponível por enquanto.",
+        coming_generation: "Em breve. A Gen 1 está disponível por enquanto.",
+        overwrite: "O slot 1 já tem save. Deseja sobrescrever?",
+        forest: "Floresta",
+        fire: "Mapa de Fogo",
+        water: "Mapa de Água",
+        cave: "Caverna",
+        ice: "Mapa de Gelo",
+        mansion: "Mansão",
+        factory: "Fábrica",
+        electric: "Mapa Elétrico",
+        desert: "Deserto",
+        ghost: "Torre Fantasma",
+        dragon: "Vale dos Dragões",
+        safari: "Zona Safari"
       }
     };
     let settings = loadSettings();
     let selectedAvatarId = 1;
+    let selectedGeneration = 1;
+    let selectedStarter = "Charmander";
+    let currentSave = getSave(1);
 
     function t(key) {
       const lang = menuText[settings.language] ? settings.language : "en";
@@ -566,6 +645,29 @@
       document.querySelector("#menu-new").textContent = t("new_game");
       document.querySelector("#menu-options").textContent = t("options");
       document.querySelector("#menu-about").textContent = t("about");
+      document.querySelector("#home-explore").textContent = t("explore_world");
+      document.querySelector("#home-pokemon").textContent = t("my_pokemon");
+      document.querySelector("#home-bag").textContent = t("bag");
+      document.querySelector("#home-pokedex").textContent = t("pokedex");
+      document.querySelector("#home-options").textContent = t("options");
+      document.querySelector("#home-exit").textContent = t("exit");
+      updateHome();
+    }
+
+    function updateHome() {
+      const save = currentSave || getSave(1) || {
+        player_name: "Player",
+        money: 3000,
+        starter_name: "Charmander",
+        badges: 0
+      };
+      document.querySelector("#home-greeting").textContent = `${t("hello")} ${save.player_name},`;
+      document.querySelector("#home-summary").innerHTML = [
+        `${t("player")}: ${save.player_name}`,
+        `${t("money")}: $${save.money || 3000}`,
+        `${t("starter")}: ${save.starter_name || "Charmander"}`,
+        `${t("progress")}: ${save.badges || 0} ${t("badges")}`
+      ].join("<br>");
     }
 
     function scalePreview() {
@@ -586,6 +688,8 @@
         document.querySelector("#enemy-hp-text").textContent = "HP 60/60";
         document.querySelector("#attack-panel").hidden = true;
       }
+
+      if (id === "home") updateHome();
     }
 
     function openOverlay(id) {
@@ -617,7 +721,7 @@
         <div class="shade"></div>
         <div class="popup-panel" style="top:${y}px; height:${height}px;"></div>
         <p class="panel-text" style="left:50px; top:${y + 26}px; width:260px; font-size:23px; font-weight:700;">${title}</p>
-        <button class="icon-button" style="left:298px; top:${y + 20}px;" data-dynamic-close><img src="assets/icons/icon_close_32.png" alt="Close"></button>
+        <button class="icon-button" style="left:298px; top:${y + 20}px;" data-dynamic-close><img src="../assets/icons/icon_close_32.png" alt="Close"></button>
         ${bodyHtml}
       `;
       document.querySelector("#phone").appendChild(modal);
@@ -642,16 +746,49 @@
 
     function openNewGameModal() {
       selectedAvatarId = 1;
+      selectedGeneration = 1;
+      selectedStarter = "Charmander";
       openDynamicModal(t("new_game"), `
-        <p class="panel-text" style="left:42px; top:136px; width:276px; text-align:left; font-size:15px; font-weight:700;">${t("player_name")}</p>
-        <input id="new-player-name" class="modal-input" style="left:42px; top:164px; width:276px;" value="KaiPlayz">
-        <p class="panel-text" style="left:42px; top:224px; width:276px; font-size:17px; font-weight:700;">${t("choose_avatar")}</p>
-        <button class="avatar-choice selected" style="left:38px; top:266px; width:88px; height:74px;" data-avatar-choice="1">${t("avatar")} 1</button>
-        <button class="avatar-choice" style="left:134px; top:266px; width:88px; height:74px;" data-avatar-choice="2">${t("avatar")} 2</button>
-        <button class="avatar-choice" style="left:230px; top:266px; width:88px; height:74px;" data-avatar-choice="3">${t("avatar")} 3</button>
-        <button class="image-button button-250" style="left:55px; top:404px; width:250px; height:52px;" id="start-game">${t("start_game")}</button>
-        <button class="image-button" style="left:70px; top:472px; width:220px; height:48px;" data-dynamic-close>${t("cancel")}</button>
-      `);
+        <div style="position:absolute; left:28px; top:112px; width:304px; height:420px; overflow-y:auto;">
+          <p class="panel-text" style="left:0; top:0; width:296px; text-align:left; font-size:15px; font-weight:700;">${t("player_name")}</p>
+          <input id="new-player-name" class="modal-input" style="left:0; top:28px; width:296px;" placeholder="${t("player_name")}">
+          <p class="panel-text" style="left:0; top:88px; width:296px; font-size:17px; font-weight:700;">${t("choose_avatar")}</p>
+          ${[1,2,3,4,5,6].map((id) => `<button class="avatar-choice ${id === 1 ? "selected" : ""}" style="left:${((id - 1) % 3) * 102}px; top:${122 + Math.floor((id - 1) / 3) * 82}px; width:92px; height:72px;" data-avatar-choice="${id}">${t("avatar")} ${id}</button>`).join("")}
+          <p class="panel-text" style="left:0; top:292px; width:296px; font-size:16px; font-weight:700;">${t("custom_image")}</p>
+          <button class="image-button button-250" style="left:23px; top:320px; width:250px; height:52px;" id="custom-avatar">${t("use_custom_image")}</button>
+          <p class="panel-text" style="left:0; top:394px; width:296px; font-size:17px; font-weight:700;">${t("choose_generation")}</p>
+          ${[1,2,3,4,5,6,7,8].map((gen) => `<button class="avatar-choice ${gen === 1 ? "selected" : ""}" style="left:${((gen - 1) % 4) * 74}px; top:${430 + Math.floor((gen - 1) / 4) * 42}px; width:68px; height:36px;" data-generation="${gen}">Gen ${gen}</button>`).join("")}
+          <p class="panel-text" style="left:0; top:528px; width:296px; font-size:17px; font-weight:700;">${t("choose_starter")}</p>
+          ${["Bulbasaur","Charmander","Squirtle"].map((name, i) => `<button class="avatar-choice ${name === "Charmander" ? "selected" : ""}" style="left:${i * 102}px; top:564px; width:92px; height:86px;" data-starter="${name}">${name}</button>`).join("")}
+        </div>
+        <button class="image-button button-250" style="left:55px; top:546px; width:250px; height:52px;" id="start-game">${t("start_game")}</button>
+      `, 42, 560);
+    }
+
+    function openWorldMapModal() {
+      const maps = [
+        ["forest", "Grass", true],
+        ["fire", "Fire", false],
+        ["water", "Water", false],
+        ["cave", "Rock", false],
+        ["ice", "Ice", false],
+        ["mansion", "Mystery", false],
+        ["factory", "Steel", false],
+        ["electric", "Electric", false],
+        ["desert", "Ground", false],
+        ["ghost", "Ghost", false],
+        ["dragon", "Dragon", false],
+        ["safari", "Mixed", false]
+      ];
+      openDynamicModal(t("world_map"), `
+        <div style="position:absolute; left:28px; top:104px; width:304px; height:468px; overflow-y:auto;">
+          ${maps.map((map, i) => `
+            <button class="slot-card" style="left:0; top:${i * 76}px; width:296px; height:66px;" ${map[2] ? 'data-screen="forest"' : 'data-map-soon'}>
+              ${t(map[0])}\n${t("type")}: ${map[1]}\n${map[2] ? t("available") : t("coming_soon")}
+            </button>
+          `).join("")}
+        </div>
+      `, 34, 580);
     }
 
     function openLoadModal() {
@@ -664,7 +801,7 @@
           continue;
         }
         slotsHtml += `
-          <button class="slot-card" style="left:28px; top:${y}px;" data-load-slot="${slot}">${t("slot")} ${slot} - ${t("avatar")} ${save.avatar_id}\n${save.player_name}\n${t("level")} ${save.level} | ${t("money")} ${save.money}</button>
+          <button class="slot-card" style="left:28px; top:${y}px;" data-load-slot="${slot}">${t("slot")} ${slot} - ${t("avatar")} ${save.avatar_id}\n${save.player_name}\n${t("starter")}: ${save.starter_name || "Charmander"} | ${t("money")}: $${save.money || 3000}</button>
           <button class="delete-small" style="left:268px; top:${y + 22}px;" data-delete-slot="${slot}">${t("delete")}</button>
         `;
       }
@@ -684,10 +821,10 @@
       }
 
       result.innerHTML = `
-        <img class="pokemon" src="assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:28px; top:420px;">
+        <img class="pokemon" src="../assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:28px; top:420px;">
         <p class="label" style="left:128px; top:420px; width:204px; font-size:17px; color:var(--blue);">Pokemon Wurmple found!</p>
         <p class="label" style="left:128px; top:458px; width:204px; font-size:16px;">Level: 15.</p>
-        <img class="badge" src="assets/badges/type_bug.png" alt="BUG" style="left:192px; top:490px;">
+        <img class="badge" src="../assets/badges/type_bug.png" alt="BUG" style="left:192px; top:490px;">
         <button class="image-button button-250" style="left:55px; top:544px; width:250px; height:52px;" data-screen="battle">Click here to fight!</button>
       `;
     }
@@ -716,6 +853,36 @@
         return;
       }
 
+      if (target.id === "home-explore") {
+        openWorldMapModal();
+        return;
+      }
+
+      if (target.id === "home-pokemon") {
+        showPopup(t("my_pokemon"), t("my_pokemon_soon"));
+        return;
+      }
+
+      if (target.id === "home-bag") {
+        showPopup(t("bag"), t("bag_soon"));
+        return;
+      }
+
+      if (target.id === "home-pokedex") {
+        showPopup(t("pokedex"), t("pokedex_soon"));
+        return;
+      }
+
+      if (target.id === "home-options") {
+        openOptionsModal();
+        return;
+      }
+
+      if (target.id === "home-exit") {
+        if (window.confirm(t("return_menu"))) showScreen("main-menu");
+        return;
+      }
+
       if (target.dataset.dynamicClose !== undefined) {
         closeDynamicModal();
         return;
@@ -724,7 +891,42 @@
       if (target.dataset.avatarChoice) {
         selectedAvatarId = Number(target.dataset.avatarChoice);
         document.querySelectorAll(".avatar-choice").forEach((button) => {
-          button.classList.toggle("selected", Number(button.dataset.avatarChoice) === selectedAvatarId);
+          if (button.dataset.avatarChoice) {
+            button.classList.toggle("selected", Number(button.dataset.avatarChoice) === selectedAvatarId);
+          }
+        });
+        return;
+      }
+
+      if (target.id === "custom-avatar") {
+        selectedAvatarId = 0;
+        showPopup(t("custom_image"), t("custom_help"));
+        return;
+      }
+
+      if (target.dataset.generation) {
+        selectedGeneration = Number(target.dataset.generation);
+        document.querySelectorAll("[data-generation]").forEach((button) => {
+          button.classList.toggle("selected", Number(button.dataset.generation) === selectedGeneration);
+        });
+        if (selectedGeneration !== 1) {
+          selectedStarter = "";
+          showPopup(`Gen ${selectedGeneration}`, t("coming_generation"));
+        } else {
+          selectedStarter = "Charmander";
+        }
+        return;
+      }
+
+      if (target.dataset.starter) {
+        if (target.dataset.starter !== "Charmander") {
+          showPopup(target.dataset.starter, t("coming_starter"));
+          return;
+        }
+        selectedGeneration = 1;
+        selectedStarter = "Charmander";
+        document.querySelectorAll("[data-starter]").forEach((button) => {
+          button.classList.toggle("selected", button.dataset.starter === "Charmander");
         });
         return;
       }
@@ -740,22 +942,34 @@
       }
 
       if (target.id === "start-game") {
+        if (selectedGeneration !== 1 || selectedStarter !== "Charmander") {
+          showPopup(t("new_game"), t("coming_starter"));
+          return;
+        }
         const input = document.querySelector("#new-player-name");
-        const playerName = input.value.trim() || "Player";
-        const slot = firstOpenSlot();
+        const playerName = input.value.trim() || (settings.language === "pt" ? "Jogador" : "Player");
+        const slot = 1;
+        if (getSave(1) && !window.confirm(t("overwrite"))) return;
         const now = new Date().toISOString();
-        writeSave(slot, {
+        currentSave = {
           slot,
           player_name: playerName,
           avatar_id: selectedAvatarId,
+          avatar_type: selectedAvatarId === 0 ? "custom" : "preset",
+          avatar_custom_path: selectedAvatarId === 0 ? "user://custom_avatar.png" : "",
+          starter_generation: 1,
+          starter_name: "Charmander",
+          starter_dex_number: 4,
           money: 3000,
+          badges: 0,
           level: 0,
           created_at: now,
           updated_at: now,
           current_scene: "HomeScreen",
           current_map: "",
           settings_language: settings.language
-        });
+        };
+        writeSave(slot, currentSave);
         showScreen("home");
         return;
       }
@@ -769,6 +983,7 @@
         }
         save.updated_at = new Date().toISOString();
         writeSave(slot, save);
+        currentSave = save;
         showScreen("home");
         return;
       }
@@ -784,6 +999,11 @@
           deleteSave(slot);
           openLoadModal();
         }
+        return;
+      }
+
+      if (target.dataset.mapSoon !== undefined) {
+        showPopup(t("world_map"), t("map_soon"));
         return;
       }
 

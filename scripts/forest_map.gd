@@ -62,4 +62,4 @@ func _clear_result() -> void:
 
 
 func _open_battle_scene() -> void:
-	get_tree().change_scene_to_file("res://BattleScene.tscn")
+	get_tree().change_scene_to_file("res://scenes/BattleScene.tscn")

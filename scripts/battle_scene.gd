@@ -112,7 +112,7 @@ func _show_pokemon() -> void:
 
 
 func _run() -> void:
-	get_tree().change_scene_to_file("res://ForestMap.tscn")
+	get_tree().change_scene_to_file("res://scenes/ForestMap.tscn")
 
 
 func _add_hp_bar(pos: Vector2, node_size: Vector2, ratio: float, node_name: String) -> void:

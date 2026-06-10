@@ -10,6 +10,7 @@ const DEFAULT_SETTINGS = {
 }
 
 var _settings: Dictionary = DEFAULT_SETTINGS.duplicate(true)
+var _current_save: Dictionary = {}
 
 
 func _ready() -> void:
@@ -50,33 +51,36 @@ func get_settings() -> Dictionary:
 	return _settings.duplicate(true)
 
 
-func create_save(slot: int, player_name: String, avatar_id: int) -> Dictionary:
+func create_save(slot: int, data: Dictionary) -> Dictionary:
 	_ensure_saves_dir()
 
-	var clean_name := player_name.strip_edges()
-	if clean_name == "":
-		clean_name = "Player"
-
-	var now := Time.get_datetime_string_from_system()
 	var save_slot := clampi(slot, 1, MAX_SAVE_SLOTS)
+	var now := Time.get_datetime_string_from_system()
 	var save_data := {
 		"slot": save_slot,
-		"player_name": clean_name,
-		"avatar_id": clampi(avatar_id, 1, 3),
-		"money": 3000,
-		"level": 0,
-		"created_at": now,
-		"updated_at": now,
-		"current_scene": "HomeScreen",
-		"current_map": "",
+		"player_name": str(data.get("player_name", _default_player_name())).strip_edges(),
+		"avatar_id": int(data.get("avatar_id", 1)),
+		"avatar_type": str(data.get("avatar_type", "preset")),
+		"avatar_custom_path": str(data.get("avatar_custom_path", "")),
+		"starter_generation": int(data.get("starter_generation", 1)),
+		"starter_name": str(data.get("starter_name", "Charmander")),
+		"starter_dex_number": int(data.get("starter_dex_number", 4)),
+		"money": int(data.get("money", 3000)),
+		"badges": int(data.get("badges", 0)),
+		"level": int(data.get("level", 0)),
+		"current_scene": str(data.get("current_scene", "HomeScreen")),
+		"current_map": str(data.get("current_map", "")),
 		"settings_language": str(_settings.get("language", "en")),
+		"created_at": str(data.get("created_at", now)),
+		"updated_at": now,
 	}
 
-	var file := FileAccess.open(_save_path(save_slot), FileAccess.WRITE)
-	if file != null:
-		file.store_string(JSON.stringify(save_data, "\t"))
+	if save_data["player_name"] == "":
+		save_data["player_name"] = _default_player_name()
 
-	return save_data
+	_write_save(save_slot, save_data)
+	set_current_save(save_data)
+	return save_data.duplicate(true)
 
 
 func get_save(slot: int) -> Dictionary:
@@ -93,7 +97,7 @@ func get_save(slot: int) -> Dictionary:
 		return {}
 
 	var save_data: Dictionary = parsed
-	return save_data
+	return _normalized_save(save_data)
 
 
 func get_all_saves() -> Array:
@@ -109,11 +113,9 @@ func load_save(slot: int) -> Dictionary:
 		return {}
 
 	save_data["updated_at"] = Time.get_datetime_string_from_system()
-	var file := FileAccess.open(_save_path(slot), FileAccess.WRITE)
-	if file != null:
-		file.store_string(JSON.stringify(save_data, "\t"))
-
-	return save_data
+	_write_save(slot, save_data)
+	set_current_save(save_data)
+	return save_data.duplicate(true)
 
 
 func delete_save(slot: int) -> void:
@@ -124,9 +126,51 @@ func delete_save(slot: int) -> void:
 	if dir != null:
 		dir.remove(_save_file_name(slot))
 
+	if int(_current_save.get("slot", 0)) == clampi(slot, 1, MAX_SAVE_SLOTS):
+		_current_save.clear()
+
 
 func has_save(slot: int) -> bool:
 	return FileAccess.file_exists(_save_path(slot))
+
+
+func get_current_save() -> Dictionary:
+	return _current_save.duplicate(true)
+
+
+func set_current_save(save_data: Dictionary) -> void:
+	_current_save = _normalized_save(save_data)
+
+
+func _normalized_save(save_data: Dictionary) -> Dictionary:
+	if save_data.is_empty():
+		return {}
+
+	var normalized := save_data.duplicate(true)
+	normalized["slot"] = int(normalized.get("slot", 1))
+	normalized["player_name"] = str(normalized.get("player_name", _default_player_name()))
+	normalized["avatar_id"] = int(normalized.get("avatar_id", 1))
+	normalized["avatar_type"] = str(normalized.get("avatar_type", "preset"))
+	normalized["avatar_custom_path"] = str(normalized.get("avatar_custom_path", ""))
+	normalized["starter_generation"] = int(normalized.get("starter_generation", 1))
+	normalized["starter_name"] = str(normalized.get("starter_name", "Charmander"))
+	normalized["starter_dex_number"] = int(normalized.get("starter_dex_number", 4))
+	normalized["money"] = int(normalized.get("money", 3000))
+	normalized["badges"] = int(normalized.get("badges", 0))
+	normalized["level"] = int(normalized.get("level", 0))
+	normalized["current_scene"] = str(normalized.get("current_scene", "HomeScreen"))
+	normalized["current_map"] = str(normalized.get("current_map", ""))
+	normalized["settings_language"] = str(normalized.get("settings_language", _settings.get("language", "en")))
+	normalized["created_at"] = str(normalized.get("created_at", ""))
+	normalized["updated_at"] = str(normalized.get("updated_at", ""))
+	return normalized
+
+
+func _write_save(slot: int, save_data: Dictionary) -> void:
+	_ensure_saves_dir()
+	var file := FileAccess.open(_save_path(slot), FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(save_data, "\t"))
 
 
 func _ensure_saves_dir() -> void:
@@ -141,3 +185,7 @@ func _save_path(slot: int) -> String:
 
 func _save_file_name(slot: int) -> String:
 	return "save_%d.json" % clampi(slot, 1, MAX_SAVE_SLOTS)
+
+
+func _default_player_name() -> String:
+	return "Jogador" if str(_settings.get("language", "en")) == "pt" else "Player"
