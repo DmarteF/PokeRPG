@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PokeRPG UI Test</title>
+  <style>
+    :root {
+      --screen-w: 360px;
+      --screen-h: 640px;
+      --white: #fff;
+      --blue: #36a4ff;
+      --panel: rgba(7, 20, 35, 0.88);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: #15191f;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    #wrap {
+      width: var(--screen-w);
+      height: var(--screen-h);
+      transform-origin: center center;
+    }
+
+    #phone {
+      position: relative;
+      width: var(--screen-w);
+      height: var(--screen-h);
+      overflow: hidden;
+      color: var(--white);
+      background: url("assets/backgrounds/gray_texture_360x640.png") center / cover no-repeat;
+      image-rendering: pixelated;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .screen,
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+
+    .screen.active,
+    .overlay.active {
+      display: block;
+    }
+
+    .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 360px;
+      height: 44px;
+      background: url("assets/ui/topbar_360x44.png") center / 100% 100% no-repeat;
+    }
+
+    .top-title {
+      position: absolute;
+      top: 7px;
+      left: 60px;
+      width: 240px;
+      height: 30px;
+      margin: 0;
+      text-align: center;
+      font-size: 20px;
+      line-height: 30px;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.65);
+    }
+
+    .logo {
+      position: absolute;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    .label {
+      position: absolute;
+      margin: 0;
+      text-align: center;
+      line-height: 1.25;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.65);
+      overflow-wrap: break-word;
+    }
+
+    button {
+      border: 0;
+      padding: 0;
+      color: var(--white);
+      font: 700 17px Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .image-button {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      background: url("assets/ui/button_orange_220x48.png") center / 100% 100% no-repeat;
+    }
+
+    .image-button:active {
+      background-image: url("assets/ui/button_orange_220x48_pressed.png");
+      transform: translateY(1px);
+    }
+
+    .button-250 {
+      background-image: url("assets/ui/button_orange_250x52.png");
+      font-size: 16px;
+    }
+
+    .button-250:active {
+      background-image: url("assets/ui/button_orange_250x52_pressed.png");
+    }
+
+    .button-180,
+    .button-140 {
+      background-image: url("assets/ui/button_orange_180x40.png");
+      font-size: 15px;
+    }
+
+    .button-180:active,
+    .button-140:active {
+      background-image: url("assets/ui/button_orange_180x40_pressed.png");
+    }
+
+    .icon-button {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+    }
+
+    .icon-button img {
+      display: block;
+      width: 32px;
+      height: 32px;
+      image-rendering: auto;
+      pointer-events: none;
+    }
+
+    .list-button {
+      position: absolute;
+      width: 320px;
+      height: 54px;
+      display: grid;
+      grid-template-columns: 58px 1fr 18px;
+      align-items: center;
+      background: url("assets/ui/list_slot_gray_320x54.png") center / 100% 100% no-repeat;
+      font-size: 17px;
+    }
+
+    .list-button:active {
+      filter: brightness(0.9);
+      transform: translateY(1px);
+    }
+
+    .list-button.no-icon {
+      grid-template-columns: 1fr;
+    }
+
+    .list-button img {
+      width: 40px;
+      height: 40px;
+      margin-left: 12px;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.42);
+    }
+
+    .popup-panel {
+      position: absolute;
+      left: 15px;
+      top: 60px;
+      width: 330px;
+      height: 520px;
+      background: url("assets/ui/popup_panel_blue_330x520.png") center / 100% 100% no-repeat;
+    }
+
+    .message-panel {
+      top: 110px;
+      height: 360px;
+    }
+
+    .map-icon {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    .badge {
+      position: absolute;
+      width: 78px;
+      height: 24px;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    .pokemon {
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    .hp-back {
+      position: absolute;
+      height: 12px;
+      background: rgba(0, 0, 0, 0.95);
+    }
+
+    .hp-fill {
+      position: absolute;
+      height: 8px;
+      background: #38d850;
+    }
+
+    .message-box {
+      position: absolute;
+      left: 16px;
+      top: 404px;
+      width: 328px;
+      height: 92px;
+      padding: 10px 16px;
+      background: var(--panel);
+      font-size: 15px;
+      line-height: 1.5;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.65);
+    }
+
+    .attack-panel-bg {
+      position: absolute;
+      left: 16px;
+      top: 504px;
+      width: 328px;
+      height: 116px;
+      background: rgba(5, 18, 31, 0.94);
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <main id="phone" aria-label="PokeRPG UI test">
+      <section id="main-menu" class="screen active">
+        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:30px; top:70px; width:300px; height:118px;">
+        <button class="image-button" style="left:70px; top:260px; width:220px; height:48px;" data-popup-title="Load Game" data-popup-message="Load Game placeholder">Load Game</button>
+        <button class="image-button" style="left:70px; top:320px; width:220px; height:48px;" data-screen="home">New Game</button>
+        <button class="image-button" style="left:70px; top:380px; width:220px; height:48px;" data-popup-title="Options" data-popup-message="Options coming soon">Options</button>
+        <button class="image-button" style="left:70px; top:440px; width:220px; height:48px;" data-popup-title="About" data-popup-message="PokeRPG private remake">About</button>
+      </section>
+
+      <section id="home" class="screen">
+        <div class="topbar"></div>
+        <button class="icon-button" style="left:20px; top:6px;" data-open-maps><img src="assets/icons/icon_map_32.png" alt="Maps"></button>
+        <button class="icon-button" style="left:88px; top:6px;" data-popup-title="Trophy" data-popup-message="Coming soon"><img src="assets/icons/icon_trophy_32.png" alt="Trophy"></button>
+        <button class="icon-button" style="left:156px; top:6px;" data-popup-title="Pokemon" data-popup-message="Coming soon"><img src="assets/icons/icon_ball_32.png" alt="Pokemon"></button>
+        <button class="icon-button" style="left:224px; top:6px;" data-popup-title="Profile" data-popup-message="Coming soon"><img src="assets/icons/icon_user_32.png" alt="User"></button>
+        <button class="icon-button" style="left:292px; top:6px;" data-popup-title="Options" data-popup-message="Options coming soon"><img src="assets/icons/icon_gear_32.png" alt="Options"></button>
+
+        <p class="label" style="left:20px; top:64px; width:320px; font-size:18px;">Hello KaiPlayz,</p>
+        <p class="label" style="left:20px; top:92px; width:320px; font-size:17px;">Welcome to</p>
+        <img class="logo" src="assets/ui/logo_pokerpg_512x200.png" alt="PokeRPG" style="left:62px; top:120px; width:236px; height:92px;">
+        <p class="label" style="left:20px; top:238px; width:320px; font-size:16px;">New here? See the tutorial:</p>
+        <button class="image-button button-250" style="left:55px; top:270px; width:250px; height:52px;" data-popup-title="Tutorial" data-popup-message="Tutorial / Web Page">Tutorial / Web Page</button>
+
+        <button class="list-button no-icon" style="left:20px; top:338px;" data-open-maps>Gen. 1 / Kanto</button>
+        <button class="list-button no-icon" style="left:20px; top:394px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 2 / Johto</button>
+        <button class="list-button no-icon" style="left:20px; top:450px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 3 / Hoenn</button>
+        <button class="list-button no-icon" style="left:20px; top:506px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 4 / Sinnoh</button>
+        <button class="list-button no-icon" style="left:20px; top:562px;" data-popup-title="Regions" data-popup-message="Coming soon">Gen. 5 / Unova</button>
+      </section>
+
+      <section id="forest" class="screen">
+        <div class="topbar"></div>
+        <h1 class="top-title">Forest Map</h1>
+        <p class="label" style="left:20px; top:54px; width:320px; font-size:22px;">Forest Map</p>
+        <img class="map-icon" src="assets/maps/map_forest_64.png" alt="Forest Map" style="left:148px; top:88px;">
+        <p class="label" style="left:28px; top:158px; width:304px; height:70px; font-size:15px;">Explore this map to find rare Pokemon in the forest map exists several types of Pokemon.</p>
+        <p class="label" style="left:24px; top:232px; width:312px; font-size:15px;">On this map you can find Pokemon types:</p>
+
+        <img class="badge" src="assets/badges/type_grass.png" alt="GRASS" style="left:20px; top:274px;">
+        <img class="badge" src="assets/badges/type_normal.png" alt="NORMAL" style="left:102px; top:274px;">
+        <img class="badge" src="assets/badges/type_ground.png" alt="GROUND" style="left:184px; top:274px;">
+        <img class="badge" src="assets/badges/type_flying.png" alt="FLYING" style="left:266px; top:274px;">
+        <img class="badge" src="assets/badges/type_water.png" alt="WATER" style="left:61px; top:308px;">
+        <img class="badge" src="assets/badges/type_poison.png" alt="POISON" style="left:143px; top:308px;">
+        <img class="badge" src="assets/badges/type_bug.png" alt="BUG" style="left:225px; top:308px;">
+
+        <button class="image-button" style="left:70px; top:358px; width:220px; height:48px;" id="explore-map">Explore Map</button>
+        <div id="forest-result"></div>
+      </section>
+
+      <section id="battle" class="screen">
+        <div class="topbar"></div>
+        <h1 class="top-title">Battle</h1>
+
+        <p class="label" style="left:18px; top:62px; width:180px; text-align:left; font-size:16px;">Wurmple Lv. 15</p>
+        <div class="hp-back" style="left:18px; top:92px; width:146px;"></div>
+        <div id="enemy-hp-fill" class="hp-fill" style="left:20px; top:94px; width:142px;"></div>
+        <p id="enemy-hp-text" class="label" style="left:18px; top:108px; width:146px; text-align:left; font-size:13px;">HP 60/60</p>
+        <img class="pokemon" src="assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:226px; top:70px;">
+
+        <img class="pokemon" src="assets/sprites/sprite_charmander_96.png" alt="Charmander" style="left:36px; top:266px; width:112px; height:112px;">
+        <p class="label" style="left:166px; top:278px; width:178px; text-align:right; font-size:16px;">Charmander Lv. 15</p>
+        <div class="hp-back" style="left:198px; top:310px; width:146px;"></div>
+        <div class="hp-fill" style="left:200px; top:312px; width:142px;"></div>
+        <p class="label" style="left:198px; top:326px; width:146px; text-align:right; font-size:13px;">HP 60/60</p>
+
+        <div id="battle-message" class="message-box">Wild Wurmple appeared!<br>Go! Charmander!<br>What will Charmander do?</div>
+
+        <div id="battle-actions">
+          <button class="image-button button-140" style="left:28px; top:512px; width:140px; height:44px;" id="fight-button">Fight</button>
+          <button class="image-button button-140" style="left:192px; top:512px; width:140px; height:44px;" data-popup-title="Bag" data-popup-message="Bag placeholder">Bag</button>
+          <button class="image-button button-140" style="left:28px; top:570px; width:140px; height:44px;" data-popup-title="Pokemon" data-popup-message="Pokemon placeholder">Pokemon</button>
+          <button class="image-button button-140" style="left:192px; top:570px; width:140px; height:44px;" data-screen="forest">Run</button>
+        </div>
+
+        <div id="attack-panel" hidden>
+          <div class="attack-panel-bg"></div>
+          <button class="image-button button-140" style="left:28px; top:516px; width:140px; height:44px;" data-attack="scratch">Scratch</button>
+          <button class="image-button button-140" style="left:192px; top:516px; width:140px; height:44px;" data-attack="metal">Metal Claw</button>
+          <button class="image-button button-140" style="left:110px; top:570px; width:140px; height:44px;" data-attack="ember">Ember</button>
+        </div>
+      </section>
+
+      <div id="maps-popup" class="overlay">
+        <div class="shade"></div>
+        <div class="popup-panel"></div>
+        <p class="label" style="left:60px; top:86px; width:240px; font-size:24px;">Maps</p>
+        <button class="icon-button" style="left:298px; top:80px;" data-close-overlay="maps-popup"><img src="assets/icons/icon_close_32.png" alt="Close"></button>
+        <button class="list-button" style="left:20px; top:138px;" data-screen="forest" data-close-before="maps-popup"><img src="assets/maps/map_forest_64.png" alt="">Forest Map</button>
+        <button class="list-button" style="left:20px; top:198px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_fire_64.png" alt="">Fire Map</button>
+        <button class="list-button" style="left:20px; top:258px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_mansion_64.png" alt="">Mansion Map</button>
+        <button class="list-button" style="left:20px; top:318px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_factory_64.png" alt="">Factory Map</button>
+        <button class="list-button" style="left:20px; top:378px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_ice_64.png" alt="">Ice Map</button>
+        <button class="list-button" style="left:20px; top:438px;" data-popup-title="Maps" data-popup-message="Coming soon"><img src="assets/maps/map_cave_64.png" alt="">Cave Map</button>
+      </div>
+
+      <div id="message-popup" class="overlay">
+        <div class="shade"></div>
+        <div class="popup-panel message-panel"></div>
+        <p id="popup-title" class="label" style="left:44px; top:140px; width:272px; font-size:22px;"></p>
+        <p id="popup-message" class="label" style="left:42px; top:205px; width:276px; height:110px; font-size:18px;"></p>
+        <button class="icon-button" style="left:298px; top:128px;" data-close-overlay="message-popup"><img src="assets/icons/icon_close_32.png" alt="Close"></button>
+        <button class="image-button" style="left:70px; top:370px; width:220px; height:48px;" data-close-overlay="message-popup">OK</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const screens = [...document.querySelectorAll(".screen")];
+    const overlays = {
+      maps: document.querySelector("#maps-popup"),
+      message: document.querySelector("#message-popup")
+    };
+
+    function scalePreview() {
+      const wrap = document.querySelector("#wrap");
+      const scale = Math.min(window.innerWidth / 360, window.innerHeight / 640, 1);
+      wrap.style.transform = `scale(${scale})`;
+    }
+
+    function showScreen(id) {
+      screens.forEach((screen) => screen.classList.toggle("active", screen.id === id));
+      closeOverlay("maps-popup");
+      closeOverlay("message-popup");
+
+      if (id === "battle") {
+        document.querySelector("#battle-message").innerHTML = "Wild Wurmple appeared!<br>Go! Charmander!<br>What will Charmander do?";
+        document.querySelector("#enemy-hp-fill").style.width = "142px";
+        document.querySelector("#enemy-hp-text").textContent = "HP 60/60";
+        document.querySelector("#attack-panel").hidden = true;
+      }
+    }
+
+    function openOverlay(id) {
+      document.querySelector(`#${id}`).classList.add("active");
+    }
+
+    function closeOverlay(id) {
+      const overlay = document.querySelector(`#${id}`);
+      if (overlay) overlay.classList.remove("active");
+    }
+
+    function showPopup(title, message) {
+      document.querySelector("#popup-title").textContent = title;
+      document.querySelector("#popup-message").textContent = message;
+      openOverlay("message-popup");
+    }
+
+    function exploreForest() {
+      const result = document.querySelector("#forest-result");
+      result.innerHTML = "";
+
+      if (Math.random() < 0.5) {
+        result.innerHTML = '<p class="label" style="left:20px; top:454px; width:320px; font-size:20px;">None pokemon found</p>';
+        return;
+      }
+
+      result.innerHTML = `
+        <img class="pokemon" src="assets/sprites/sprite_wurmple_96.png" alt="Wurmple" style="left:28px; top:420px;">
+        <p class="label" style="left:128px; top:420px; width:204px; font-size:17px; color:var(--blue);">Pokemon Wurmple found!</p>
+        <p class="label" style="left:128px; top:458px; width:204px; font-size:16px;">Level: 15.</p>
+        <img class="badge" src="assets/badges/type_bug.png" alt="BUG" style="left:192px; top:490px;">
+        <button class="image-button button-250" style="left:55px; top:544px; width:250px; height:52px;" data-screen="battle">Click here to fight!</button>
+      `;
+    }
+
+    document.addEventListener("click", (event) => {
+      const target = event.target.closest("button");
+      if (!target) return;
+
+      if (target.dataset.openMaps !== undefined) {
+        openOverlay("maps-popup");
+        return;
+      }
+
+      if (target.dataset.closeOverlay) {
+        closeOverlay(target.dataset.closeOverlay);
+        return;
+      }
+
+      if (target.dataset.popupTitle) {
+        showPopup(target.dataset.popupTitle, target.dataset.popupMessage || "");
+        return;
+      }
+
+      if (target.dataset.screen) {
+        if (target.dataset.closeBefore) closeOverlay(target.dataset.closeBefore);
+        showScreen(target.dataset.screen);
+        return;
+      }
+
+      if (target.id === "explore-map") {
+        exploreForest();
+        return;
+      }
+
+      if (target.id === "fight-button") {
+        document.querySelector("#attack-panel").hidden = false;
+        return;
+      }
+
+      if (target.dataset.attack) {
+        document.querySelector("#attack-panel").hidden = true;
+        const message = document.querySelector("#battle-message");
+
+        if (target.dataset.attack === "ember") {
+          message.innerHTML = "Charmander used Ember!<br>Damage: 30<br>Wurmple used Bug Bite!";
+          document.querySelector("#enemy-hp-fill").style.width = "71px";
+          document.querySelector("#enemy-hp-text").textContent = "HP 30/60";
+          return;
+        }
+
+        if (target.dataset.attack === "metal") {
+          message.innerHTML = "Charmander used Metal Claw!<br>Wurmple is still standing.<br>What will Charmander do?";
+          return;
+        }
+
+        message.innerHTML = "Charmander used Scratch!<br>Wurmple is still standing.<br>What will Charmander do?";
+      }
+    });
+
+    window.addEventListener("resize", scalePreview);
+    scalePreview();
+  </script>
+</body>
+</html>
