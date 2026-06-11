@@ -19,6 +19,7 @@ config/icon="res://assets/android/app_icon_512.png"
 
 SaveManager="*res://scripts/save_manager.gd"
 GameState="*res://scripts/game_state.gd"
+InventoryManager="*res://scripts/inventory_manager.gd"
 
 [display]
 

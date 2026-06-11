@@ -8,6 +8,11 @@ const DEFAULT_SETTINGS = {
 	"sfx_enabled": true,
 	"language": "en",
 }
+const DEFAULT_INVENTORY = {
+	"poke_ball": 5,
+	"potion": 3,
+	"town_map": 1,
+}
 
 var _settings: Dictionary = DEFAULT_SETTINGS.duplicate(true)
 var _current_save: Dictionary = {}
@@ -68,6 +73,7 @@ func create_save(slot: int, data: Dictionary) -> Dictionary:
 		"money": int(data.get("money", 3000)),
 		"badges": int(data.get("badges", 0)),
 		"level": int(data.get("level", 0)),
+		"inventory": _normalized_inventory(data.get("inventory", DEFAULT_INVENTORY)),
 		"current_scene": str(data.get("current_scene", "HomeScreen")),
 		"current_map": str(data.get("current_map", "")),
 		"settings_language": str(_settings.get("language", "en")),
@@ -142,6 +148,31 @@ func set_current_save(save_data: Dictionary) -> void:
 	_current_save = _normalized_save(save_data)
 
 
+func update_current_save(changes: Dictionary) -> Dictionary:
+	if _current_save.is_empty():
+		return {}
+
+	var updated := _current_save.duplicate(true)
+	for key in changes.keys():
+		updated[key] = changes[key]
+
+	updated["updated_at"] = Time.get_datetime_string_from_system()
+	_write_save(int(updated.get("slot", 1)), updated)
+	set_current_save(updated)
+	return _current_save.duplicate(true)
+
+
+func save_current_save(save_data: Dictionary) -> Dictionary:
+	if save_data.is_empty():
+		return {}
+
+	var normalized := _normalized_save(save_data)
+	normalized["updated_at"] = Time.get_datetime_string_from_system()
+	_write_save(int(normalized.get("slot", 1)), normalized)
+	set_current_save(normalized)
+	return _current_save.duplicate(true)
+
+
 func _normalized_save(save_data: Dictionary) -> Dictionary:
 	if save_data.is_empty():
 		return {}
@@ -158,6 +189,7 @@ func _normalized_save(save_data: Dictionary) -> Dictionary:
 	normalized["money"] = int(normalized.get("money", 3000))
 	normalized["badges"] = int(normalized.get("badges", 0))
 	normalized["level"] = int(normalized.get("level", 0))
+	normalized["inventory"] = _normalized_inventory(normalized.get("inventory", DEFAULT_INVENTORY))
 	normalized["current_scene"] = str(normalized.get("current_scene", "HomeScreen"))
 	normalized["current_map"] = str(normalized.get("current_map", ""))
 	normalized["settings_language"] = str(normalized.get("settings_language", _settings.get("language", "en")))
@@ -189,3 +221,16 @@ func _save_file_name(slot: int) -> String:
 
 func _default_player_name() -> String:
 	return "Jogador" if str(_settings.get("language", "en")) == "pt" else "Player"
+
+
+func _normalized_inventory(value) -> Dictionary:
+	var inventory := {}
+	if typeof(value) == TYPE_DICTIONARY:
+		var source: Dictionary = value
+		for item_id in source.keys():
+			inventory[str(item_id)] = max(0, int(source[item_id]))
+
+	if inventory.is_empty():
+		return DEFAULT_INVENTORY.duplicate(true)
+
+	return inventory
